@@ -28,3 +28,7 @@ def top_weeks_by_emission(rows: list[dict[str, str]], top_k: int = 5) -> list[tu
     means = mean_emission_by_week(rows)
     ranked = sorted(means.items(), key=lambda item: item[1], reverse=True)
     return ranked[:top_k]
+
+
+def filter_rows_by_year(rows: list[dict[str, str]], year: int) -> list[dict[str, str]]:
+    return [row for row in rows if int(row["year"]) == year]

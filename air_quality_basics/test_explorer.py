@@ -1,7 +1,7 @@
 import unittest
 from pathlib import Path
 
-from explorer import load_rows, mean_emission_by_week, top_weeks_by_emission
+from explorer import filter_rows_by_year, load_rows, mean_emission_by_week, top_weeks_by_emission
 
 
 class AirQualityExplorerTests(unittest.TestCase):
@@ -24,6 +24,13 @@ class AirQualityExplorerTests(unittest.TestCase):
         top = top_weeks_by_emission(rows, top_k=3)
         self.assertEqual(len(top), 3)
         self.assertGreaterEqual(top[0][1], top[1][1])
+
+    def test_filter_rows_by_year(self) -> None:
+        base = Path(__file__).resolve().parents[1]
+        rows = load_rows(base / "Train.csv", limit=200)
+        filtered = filter_rows_by_year(rows, 2019)
+        self.assertGreater(len(filtered), 0)
+        self.assertTrue(all(int(row["year"]) == 2019 for row in filtered))
 
 
 if __name__ == "__main__":
