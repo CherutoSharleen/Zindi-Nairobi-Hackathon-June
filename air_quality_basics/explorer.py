@@ -32,3 +32,10 @@ def top_weeks_by_emission(rows: list[dict[str, str]], top_k: int = 5) -> list[tu
 
 def filter_rows_by_year(rows: list[dict[str, str]], year: int) -> list[dict[str, str]]:
     return [row for row in rows if int(row["year"]) == year]
+
+
+def yearly_mean_emission(rows: list[dict[str, str]]) -> dict[int, float]:
+    grouped: dict[int, list[float]] = defaultdict(list)
+    for row in rows:
+        grouped[int(row["year"])].append(float(row["emission"]))
+    return {year: sum(values) / len(values) for year, values in grouped.items()}
