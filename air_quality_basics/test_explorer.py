@@ -6,6 +6,7 @@ from explorer import (
     load_rows,
     mean_emission_by_week,
     top_weeks_by_emission,
+    weekly_mean_for_year,
     yearly_mean_emission,
 )
 
@@ -44,6 +45,12 @@ class AirQualityExplorerTests(unittest.TestCase):
         yearly = yearly_mean_emission(rows)
         self.assertGreater(len(yearly), 0)
         self.assertIn(2019, yearly)
+
+    def test_weekly_mean_for_year(self) -> None:
+        base = Path(__file__).resolve().parents[1]
+        rows = load_rows(base / "Train.csv", limit=800)
+        weekly = weekly_mean_for_year(rows, 2019)
+        self.assertGreater(len(weekly), 0)
 
 
 if __name__ == "__main__":

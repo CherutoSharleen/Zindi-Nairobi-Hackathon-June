@@ -39,3 +39,8 @@ def yearly_mean_emission(rows: list[dict[str, str]]) -> dict[int, float]:
     for row in rows:
         grouped[int(row["year"])].append(float(row["emission"]))
     return {year: sum(values) / len(values) for year, values in grouped.items()}
+
+
+def weekly_mean_for_year(rows: list[dict[str, str]], year: int) -> dict[int, float]:
+    selected = filter_rows_by_year(rows, year)
+    return mean_emission_by_week(selected)
