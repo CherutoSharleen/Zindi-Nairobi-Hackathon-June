@@ -44,3 +44,11 @@ def yearly_mean_emission(rows: list[dict[str, str]]) -> dict[int, float]:
 def weekly_mean_for_year(rows: list[dict[str, str]], year: int) -> dict[int, float]:
     selected = filter_rows_by_year(rows, year)
     return mean_emission_by_week(selected)
+
+
+def row_count_by_year(rows: list[dict[str, str]]) -> dict[int, int]:
+    counts: dict[int, int] = {}
+    for row in rows:
+        year = int(row["year"])
+        counts[year] = counts.get(year, 0) + 1
+    return counts
